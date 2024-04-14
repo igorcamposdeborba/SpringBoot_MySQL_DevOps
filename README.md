@@ -37,6 +37,8 @@ Servidor funcionando. Retornando requisição.
     Código replicas que cria os 4 contêineres.
     <img src="prints/kubernetes_conteiners_codigo.png" width="100%" height="100%">
     <br>
+    Todos os contêineres
+    <img src="prints/kubernetes_todos_conteiners.png" width="100%" height="100%">
     b) Exponha sua aplicação de modo que ela fique acessível fora do Cluster. (NODEPORT)
     <img src="prints/kubernetes_cluster_codigo.png" width="100%" height="100%">
     <br>
@@ -70,14 +72,14 @@ Não executado.
 ## Passos para Configuração
 1) Clone o repositório do projeto.
 2) Navegue até uma pasta anterior à SpringBoot_MySQL_DevOps
-3) Execute para criar ou parar o docker a fim de iniciar/parar os comandos .yaml para subir a aplicação:
-kubectl create -f SpringBoot_MySQL_DevOps
-kubectl delete -f SpringBoot_MySQL_DevOps
+3) Execute para criar ou parar o docker a fim de iniciar/parar os comandos .yaml para subir a aplicação:<br>
+kubectl create -f SpringBoot_MySQL_DevOps <br>
+kubectl delete -f SpringBoot_MySQL_DevOps <br>
 4) Acesse os serviços:
 Prometheus: 
-http://localhost:8080/actuator/prometheus
-http://localhost:8080/actuator/health
-Grafana: http://localhost:3000
-Endpoints e Postman (importe no aplicativo postman): [Postman.json](./postman/postman_eventos_e_cidades_backend.json)
-http://localhost:8080/events
-http://localhost:8080/cities
+http://localhost:8080/actuator/prometheus <br>
+http://localhost:8080/actuator/health <br>
+Grafana: http://localhost:3000 <br>
+Endpoints e Postman (importe no aplicativo postman): [Postman.json](./postman/postman_eventos_e_cidades_backend.json) <br>
+http://localhost:8080/events <br> 
+http://localhost:8080/cities<br>
