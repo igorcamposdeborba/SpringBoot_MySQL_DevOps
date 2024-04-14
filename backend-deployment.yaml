@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: backend-deployment
+  template:
+    metadata:
+      labels:
+        app: backend-deployment
+    spec:
+      containers:
+      - name: backend-image
+        image: igorcamposdeborba/backend
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 50
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        env:
+        - name: MYSQL_DB_HOST
+          value: mysql-container # nome do host da api back-end
+        - name: MYSQL_DB_PASSWORD
+          value: "123456"
+        volumeMounts:
+          - name: backend-volume
+            mountPath: ./banco
+      volumes:
+        - name: backend-volume
+          persistentVolumeClaim:
+            claimName: backend-pvc
+
+            

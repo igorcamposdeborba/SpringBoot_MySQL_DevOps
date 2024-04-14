@@ -1,0 +1,42 @@
+version: '3.8'
+services: 
+  mysql-container:
+    restart: always
+    container_name: mysql-container
+    image: mysql:5.7.41
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_DATABASE: "testdb"
+    volumes:
+      - ./banco:/var/lib/mysql
+      - ./backend/src/main/resources/data.sql:/docker-entrypoint-initdb.d/data.sql
+    ports:
+      - "3306:3306"
+
+  backend-container:
+    restart: always
+    container_name: backend-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql-container
+
+  prometheus:
+    image: prom/prometheus:v2.44.0
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana:9.5.2
+    container_name: grafana
+    ports:
+      - "8080:3000"
+    restart: unless-stopped
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
